@@ -34,7 +34,7 @@ int main () {
     }
 
 	//Create the shader program
-	GLuint programID = ShaderUtil::createProgram("vertexshader_two.vs", "fragmentshader_two.fs");
+	GLuint programID = ShaderUtil::createProgram("vertexshader_two.vs", "fragmentshader_checkers.fs");
 
 	//declare the data to upload
 	const GLfloat vertices[] = {
@@ -63,12 +63,12 @@ int main () {
     const GLfloat colors[] {
         //1 triangle, 3 vertices per triangle, 1 color per vertex, 3 "floats" per color RGB = 9 floats in total
         1,0,0,
-        0,1,0,
-        0,0,1,
+        0,0,0,
+        1,1,0,
 
+		0,0,0,
 		0,1,0,
-		0,0.75f,0.75f,
-		0,0,1
+		1,1,0
     };
 
 	//create a handle to the buffer
