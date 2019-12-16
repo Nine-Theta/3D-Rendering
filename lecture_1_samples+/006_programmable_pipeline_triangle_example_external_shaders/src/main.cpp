@@ -34,7 +34,7 @@ int main () {
     }
 
 	//Create the shader program
-	GLuint programID = ShaderUtil::createProgram("vertexshader_two.vs", "fragmentshader_checkers.fs");
+	GLuint programID = ShaderUtil::createProgram("vertexshader_two.vs", "fragmentshader_rotate.fs");
 
 	//declare the data to upload
 	const GLfloat vertices[] = {
@@ -84,6 +84,8 @@ int main () {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	sf::Clock clock;
+	
+	float moveX = 0, moveY = 0, scale = 1;
 
     glClearColor(0, 0, 0, 1);
     while (window.isOpen()) {
@@ -96,10 +98,28 @@ int main () {
 		//offset
 		float elapsedTime = clock.getElapsedTime().asSeconds();
 		glUniform2f(glGetUniformLocation(programID, "offset"), 0.5f*cos(elapsedTime), 0.5f*sin(elapsedTime));
+				
+		glUniform1f(glGetUniformLocation(programID, "time"), elapsedTime);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add))
+			scale += +0.002f;
+		else if (scale > 1 && sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract))
+			scale -= 0.002f;
+
+		glUniform1f(glGetUniformLocation(programID, "scale"), scale);
+
+		glUniform2f(glGetUniformLocation(programID, "move"), moveX, moveY);
+
+		glUniform2f(glGetUniformLocation(programID, "mousePos"), sf::Mouse::getPosition().x - window.getPosition().x, sf::Mouse::getPosition().y - window.getPosition().y);
+
+		glUniform2f(glGetUniformLocation(programID, "screenSize"), window.getSize().x, window.getSize().y);
+
+		//std::cout << sf::Mouse::getPosition().x - window.getPosition().x << std::endl;
 
         //get index for the attributes in the shader
         GLint vertexIndex = glGetAttribLocation(programID, "vertex");
 		GLint colorIndex = glGetAttribLocation(programID, "color");
+		//GLint mousePosIndex = glGetAttribLocation(programID, "mousePos");
 
 		//tell OpenGL that the data for the vertexIndex/colorIndex is coming in from an array
 		glEnableVertexAttribArray(vertexIndex);
