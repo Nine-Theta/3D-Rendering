@@ -171,9 +171,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\ShaderHelper.cpp" />
     <ClCompile Include="..\src\ShaderUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\ShaderHelper.h" />
     <ClInclude Include="..\src\ShaderUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
