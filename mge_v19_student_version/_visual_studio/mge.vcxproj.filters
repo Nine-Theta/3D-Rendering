@@ -20,6 +20,9 @@
     <Filter Include="MGE Source files\mge\util">
       <UniqueIdentifier>{7d824c34-4bb6-43a4-a48a-0d68b7aad6e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MGE Source files\RenderingProject">
+      <UniqueIdentifier>{03d389a8-4e26-4b17-91e8-3238a73ee818}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\glm.hpp">
@@ -79,6 +82,12 @@
     <ClInclude Include="..\src\mge\core\Light.hpp">
       <Filter>MGE Source files\mge\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\config.hpp">
+      <Filter>MGE Source files\RenderingProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\RenderingProject.hpp">
+      <Filter>MGE Source files\RenderingProject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -134,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="..\src\mge\core\Light.cpp">
       <Filter>MGE Source files\mge\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject\RenderingProject.cpp">
+      <Filter>MGE Source files\RenderingProject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

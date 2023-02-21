@@ -22,14 +22,15 @@
 #include "mge/util/DebugHud.hpp"
 
 #include "mge/config.hpp"
-#include "mge/MGEDemo.hpp"
+#include "RenderingProject/config.hpp"
+#include "RenderingProject/RenderingProject.hpp"
 
 //construct the game class into _window, _renderer and hud (other parts are initialized by build)
-MGEDemo::MGEDemo():AbstractGame (),_hud(0)
+RenderingProject::RenderingProject():AbstractGame (),_hud(0)
 {
 }
 
-void MGEDemo::initialize() {
+void RenderingProject::initialize() {
     //setup the core part
     AbstractGame::initialize();
 
@@ -40,7 +41,7 @@ void MGEDemo::initialize() {
 }
 
 //build the game _world
-void MGEDemo::_initializeScene()
+void RenderingProject::_initializeScene()
 {
     //MESHES
 
@@ -94,12 +95,12 @@ void MGEDemo::_initializeScene()
 
 }
 
-void MGEDemo::_render() {
+void RenderingProject::_render() {
     AbstractGame::_render();
     _updateHud();
 }
 
-void MGEDemo::_updateHud() {
+void RenderingProject::_updateHud() {
     std::string debugInfo = "";
     debugInfo += std::string ("FPS:") + std::to_string((int)_fps)+"\n";
 
@@ -107,7 +108,7 @@ void MGEDemo::_updateHud() {
     _hud->draw();
 }
 
-MGEDemo::~MGEDemo()
+RenderingProject::~RenderingProject()
 {
 	//dtor
 }

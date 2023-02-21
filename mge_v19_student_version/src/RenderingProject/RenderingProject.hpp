@@ -1,5 +1,5 @@
-#ifndef MGEDEMO_HPP
-#define MGEDEMO_HPP
+#ifndef RenderingProject_HPP
+#define RenderingProject_HPP
 
 #include "mge/core/AbstractGame.hpp"
 
@@ -8,13 +8,13 @@ class DebugHud;
 /**
  * An example subclass of AbstractGame showing how we can setup a scene.
  */
-class MGEDemo: public AbstractGame
+class RenderingProject: public AbstractGame
 {
     //PUBLIC FUNCTIONS
 
 	public:
-		MGEDemo();
-		virtual ~MGEDemo();
+		RenderingProject();
+		virtual ~RenderingProject();
 
         //override initialize so we can add a DebugHud
         virtual void initialize();
@@ -31,8 +31,8 @@ class MGEDemo: public AbstractGame
 
         void _updateHud();
 
-        MGEDemo(const MGEDemo&);
-        MGEDemo& operator=(const MGEDemo&);
+        RenderingProject(const RenderingProject&);
+        RenderingProject& operator=(const RenderingProject&);
 };
 
-#endif // MGEDEMO_HPP
+#endif // RenderingProject_HPP
