@@ -93,6 +93,7 @@ int main() {
 		mouse.x /= window.getSize().x;
 		mouse.y /= window.getSize().y;
 
+		
 		std::cout << mouse.x << std::endl;
 
 
@@ -105,10 +106,11 @@ int main() {
 
 		//offset
 		float elapsedTime = clock.getElapsedTime().asSeconds();
-		//glUniform2f(glGetUniformLocation(programID, "offset"), 0.5f * cos(elapsedTime), 0.5f * sin(elapsedTime));
+		glUniform2f(glGetUniformLocation(programID, "offset"), 0.5f * cos(elapsedTime), 0.5f * sin(elapsedTime));
 		glUniform1f(glGetUniformLocation(programID, "size"), size);
 		glUniform1f(glGetUniformLocation(programID, "angle"), angle);
 		glUniform3f(glGetUniformLocation(programID, "mouse"), mouse.x, 1 - mouse.y, sqrt(mouse.x*mouse.x + mouse.y*mouse.y));
+		glUniform1f(glGetUniformLocation(programID, "lightMult"), 3.0f);
 
 		//manager.RenderModel(vertexBufferId,colorBufferId,3);
 		manager.RenderModel(vertBufferId, colorBufferId, 6);

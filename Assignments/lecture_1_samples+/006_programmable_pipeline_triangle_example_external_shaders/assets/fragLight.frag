@@ -2,9 +2,12 @@
 
 in vec3 fColor;
 in vec2 fPosition;
+in vec2 fScreenPosition;
 in vec2 fSize;
 in vec2 fAngle;
 in vec3 fMouse;
+
+in float fLightMult;
 
 out vec4 sColor;
 
@@ -22,23 +25,15 @@ void main (void) {
    y = mod(pos.y, fSize.y)*fSize.x;
 
    y = round(y);
-   x = round(x);
+   x = round(x);   
 
-   float z = fColor.x*fColor.y;
+   float checkers = mod(x+y,2);
 
-   
+   float delta = abs(fScreenPosition.x - fMouse.x) + abs(fScreenPosition.y - fMouse.y);
 
-   float q = mod(x+y,2);
-
-   float f = fMouse.x - fPosition.x;
-   float r = fPosition.y - fMouse.y;
-   float g = f*r;
-
-   q = q+fMouse.x*fMouse.y-1.3;
+   float lightPattern = (1 - (delta * fLightMult));
 
 
-    sColor = vec4(q,q,q,1) * vec4(fColor,1);
-
-
+    sColor = vec4(lightPattern * checkers * fColor,1);
 }
 
