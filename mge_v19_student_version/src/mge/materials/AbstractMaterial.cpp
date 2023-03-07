@@ -1,12 +1,13 @@
 #include "mge/materials/AbstractMaterial.hpp"
 
-AbstractMaterial::AbstractMaterial()
-{
-    //ctor
-}
+namespace MGE {
+    AbstractMaterial::AbstractMaterial()
+    {
+        //ctor
+    }
 
-AbstractMaterial::~AbstractMaterial()
-{
-    //dtor
+    AbstractMaterial::~AbstractMaterial()
+    {
+        //dtor
+    }
 }
-

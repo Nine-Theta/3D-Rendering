@@ -25,90 +25,95 @@
 #include "RenderingProject/config.hpp"
 #include "RenderingProject/RenderingProject.hpp"
 
-//construct the game class into _window, _renderer and hud (other parts are initialized by build)
-RenderingProject::RenderingProject():AbstractGame (),_hud(0)
-{
-}
+#include "RenderingProject_Engine/Core/GameObject.hpp"
 
-void RenderingProject::initialize() {
-    //setup the core part
-    AbstractGame::initialize();
+namespace RP {
+    //construct the game class into _window, _renderer and hud (other parts are initialized by build)
+    RenderingProject::RenderingProject() : MGE::AbstractGame(), _hud(0)
+    {
+    }
 
-    //setup the custom part so we can display some text
-	std::cout << "Initializing HUD" << std::endl;
-	_hud = new DebugHud(_window);
-	std::cout << "HUD initialized." << std::endl << std::endl;
-}
+    void RenderingProject::initialize() {
+        //setup the core part
+        MGE::AbstractGame::initialize();
 
-//build the game _world
-void RenderingProject::_initializeScene()
-{
-    //MESHES
+        //setup the custom part so we can display some text
+        std::cout << "Initializing HUD" << std::endl;
+        _hud = new MGE::DebugHud(_window);
 
-    //load a bunch of meshes we will be using throughout this demo
-    //each mesh only has to be loaded once, but can be used multiple times:
-    //F is flat shaded, S is smooth shaded (normals aligned or not), check the models folder!
-    Mesh* planeMeshDefault = Mesh::load (config::MGE_MODEL_PATH+"plane.obj");
-    Mesh* cubeMeshF = Mesh::load (config::MGE_MODEL_PATH+"cube_flat.obj");
-    Mesh* sphereMeshS = Mesh::load (config::MGE_MODEL_PATH+"sphere_smooth.obj");
+        std::cout << "HUD initialized." << std::endl << std::endl;
+    }
 
-    //MATERIALS
+    //build the game _world
+    void RenderingProject::_initializeScene()
+    {
+        //MESHES
 
-    //create some materials to display the cube, the plane and the light
-    AbstractMaterial* lightMaterial = new ColorMaterial (glm::vec3(1,1,0));
-    AbstractMaterial* runicStoneMaterial = new TextureMaterial (Texture::load (config::MGE_TEXTURE_PATH+"runicfloor.png"));
+        //load a bunch of meshes we will be using throughout this demo
+        //each mesh only has to be loaded once, but can be used multiple times:
+        //F is flat shaded, S is smooth shaded (normals aligned or not), check the models folder!
+        MGE::Mesh* planeMeshDefault = MGE::Mesh::load(config::MGE_MODEL_PATH + "plane.obj");
+        MGE::Mesh* cubeMeshF = MGE::Mesh::load(config::MGE_MODEL_PATH + "cube_flat.obj");
+        MGE::Mesh* sphereMeshS = MGE::Mesh::load(config::MGE_MODEL_PATH + "sphere_smooth.obj");
 
-    //SCENE SETUP
+        //MATERIALS
 
-   //add camera first (it will be updated last)
-    Camera* camera = new Camera ("camera", glm::vec3(0,6,7));
-    camera->rotate(glm::radians(-40.0f), glm::vec3(1,0,0));
-    _world->add(camera);
-    _world->setMainCamera(camera);
+        //create some materials to display the cube, the plane and the light
 
-    //add the floor
-    GameObject* plane = new GameObject ("plane", glm::vec3(0,0,0));
-    plane->scale(glm::vec3(5,5,5));
-    plane->setMesh(planeMeshDefault);
-    plane->setMaterial(runicStoneMaterial);
-    _world->add(plane);
+        MGE::AbstractMaterial* lightMaterial = new MGE::ColorMaterial(glm::vec3(1, 1, 0));
+        MGE::AbstractMaterial* runicStoneMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "runicfloor.png"));
 
-    //add a spinning sphere
-    GameObject* sphere = new GameObject ("sphere", glm::vec3(0,0,0));
-    sphere->scale(glm::vec3(2.5,2.5,2.5));
-    sphere->setMesh (sphereMeshS);
-    sphere->setMaterial(runicStoneMaterial);
-    sphere->setBehaviour (new RotatingBehaviour());
-    _world->add(sphere);
+        //set Models
 
-    //add a light. Note that the light does ABSOLUTELY ZIP! NADA ! NOTHING !
-    //It's here as a place holder to get you started.
-    //Note how the texture material is able to detect the number of lights in the scene
-    //even though it doesn't implement any lighting yet!
+        RPEngine::Model* sphereModel = new RPEngine::Model(sphereMeshS, runicStoneMaterial, glm::vec3(2.5, 2.5, 2.5));
+        RPEngine::Model* floorModel = new RPEngine::Model(planeMeshDefault, runicStoneMaterial, glm::vec3(5, 5, 5));
+        RPEngine::Model* lightModel = new RPEngine::Model(cubeMeshF, lightMaterial, glm::vec3(0.1f, 0.1f, 0.1f));
 
-    Light* light = new Light("light", glm::vec3(0,4,0));
-    light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
-    light->setMesh(cubeMeshF);
-    light->setMaterial(lightMaterial);
-    light->setBehaviour(new KeysBehaviour(25));
-    _world->add(light);
+        //SCENE SETUP
 
-}
+       //add camera first (it will be updated last)
+        MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 6, 7));
+        camera->rotate(glm::radians(-40.0f), glm::vec3(1, 0, 0));
+        _world->add(camera);
+        _world->setMainCamera(camera);
 
-void RenderingProject::_render() {
-    AbstractGame::_render();
-    _updateHud();
-}
+        //add the floor
+        RPEngine::GameObject* plane = new RPEngine::GameObject("plane", glm::vec3(0, 0, 0), floorModel, _world);
 
-void RenderingProject::_updateHud() {
-    std::string debugInfo = "";
-    debugInfo += std::string ("FPS:") + std::to_string((int)_fps)+"\n";
 
-    _hud->setDebugInfo(debugInfo);
-    _hud->draw();
-}
+        //add a spinning sphere
+        RPEngine::GameObject* sphere = new RPEngine::GameObject("sphere", glm::vec3(0, 0, 0), sphereModel, _world);
+        sphere->setBehaviour(new MGE::RotatingBehaviour());
 
-RenderingProject::~RenderingProject()
-{
-	//dtor
+        //add a light. Note that the light does ABSOLUTELY ZIP! NADA ! NOTHING !
+        //It's here as a place holder to get you started.
+        //Note how the texture material is able to detect the number of lights in the scene
+        //even though it doesn't implement any lighting yet!
+
+        MGE::Light* light = new MGE::Light("light", glm::vec3(0, 4, 0));
+        light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
+        light->setMesh(cubeMeshF);
+        light->setMaterial(lightMaterial);
+        light->setBehaviour(new MGE::KeysBehaviour(25));
+        _world->add(light);
+
+    }
+
+    void RenderingProject::_render() {
+        MGE::AbstractGame::_render();
+        _updateHud();
+    }
+
+    void RenderingProject::_updateHud() {
+        std::string debugInfo = "";
+        debugInfo += std::string("FPS:") + std::to_string((int)_fps) + "\n";
+
+        _hud->setDebugInfo(debugInfo);
+        _hud->draw();
+    }
+
+    RenderingProject::~RenderingProject()
+    {
+        //dtor
+    }
 }

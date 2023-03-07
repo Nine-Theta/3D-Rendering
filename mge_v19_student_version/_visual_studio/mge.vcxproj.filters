@@ -23,6 +23,12 @@
     <Filter Include="MGE Source files\RenderingProject">
       <UniqueIdentifier>{03d389a8-4e26-4b17-91e8-3238a73ee818}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MGE Source files\RenderProject_Engine">
+      <UniqueIdentifier>{02d00c0f-0087-4358-ac5b-7bdcaaf534df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MGE Source files\RenderProject_Engine\Core">
+      <UniqueIdentifier>{fac90f52-4170-4cb0-b9e5-acb83a70c113}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\glm.hpp">
@@ -88,6 +94,12 @@
     <ClInclude Include="..\src\RenderingProject\RenderingProject.hpp">
       <Filter>MGE Source files\RenderingProject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\RenderingProject_Engine\Core\GameObject.hpp">
+      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp">
+      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -146,6 +158,12 @@
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject\RenderingProject.cpp">
       <Filter>MGE Source files\RenderingProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject_Engine\Core\GameObject.cpp">
+      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp">
+      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

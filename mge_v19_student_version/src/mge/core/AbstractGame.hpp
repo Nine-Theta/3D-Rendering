@@ -5,16 +5,16 @@
 #include <GL/glew.h>
 #include <string>
 
-class World;
-class Renderer;
-
-/**
- * Defines the basic structure for a game, with defaults already filled in.
- * The only item that MUST be overridden/implemented is _initializeScene()
- * where you build up your world, the rest is optional to override (with care/caution).
- */
-class AbstractGame
-{
+namespace MGE {
+    class World;
+    class Renderer;
+    /**
+     * Defines the basic structure for a game, with defaults already filled in.
+     * The only item that MUST be overridden/implemented is _initializeScene()
+     * where you build up your world, the rest is optional to override (with care/caution).
+     */
+    class AbstractGame
+    {
     public:
 
         AbstractGame();
@@ -50,16 +50,16 @@ class AbstractGame
         //process any sfml window events (see SystemEventDispatcher/Listener)
         virtual void _processEvents();
 
-		sf::RenderWindow* _window;  //sfml window to render into
-		Renderer* _renderer;        //the renderer class to render the world
-		World* _world;              //the root game object that represents our scene
-		float _fps;                 //stores the real fps
+        sf::RenderWindow* _window;  //sfml window to render into
+        Renderer* _renderer;        //the renderer class to render the world
+        World* _world;              //the root game object that represents our scene
+        float _fps;                 //stores the real fps
 
     private:
         AbstractGame(const AbstractGame&);
         AbstractGame& operator=(const AbstractGame&);
 
 
-};
-
+    };
+}
 #endif // ABSTRACTGAME_HPP

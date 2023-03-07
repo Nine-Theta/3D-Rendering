@@ -4,31 +4,33 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-/**
- * Very simple class capable of rendering a simple piece of text through SFML.
- */
-class DebugHud
-{
+
+namespace MGE {
+	/**
+	 * Very simple class capable of rendering a simple piece of text through SFML.
+	 */
+	class DebugHud
+	{
 	public:
-		DebugHud( sf::RenderWindow * aWindow );
+		DebugHud(sf::RenderWindow* aWindow);
 		virtual ~DebugHud();
 		void draw();
 
-		void setDebugInfo (std::string pInfo);
+		void setDebugInfo(std::string pInfo);
 
 	private:
-		sf::RenderWindow * _window;
+		sf::RenderWindow* _window;
 
-        std::string _debugInfo;
+		std::string _debugInfo;
 
-        sf::Font _font;
-        sf::Text _debugText;
+		sf::Font _font;
+		sf::Text _debugText;
 
-        void _createDebugHud();
+		void _createDebugHud();
 
-        DebugHud(const DebugHud&);
-        DebugHud& operator=(const DebugHud&);
+		DebugHud(const DebugHud&);
+		DebugHud& operator=(const DebugHud&);
 
-};
-
+	};
+}
 #endif // DEBUGHUD_HPP

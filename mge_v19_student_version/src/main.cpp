@@ -22,7 +22,7 @@ int main()
 {
     std::cout << "Starting Game" << std::endl;
 
-    AbstractGame* game = new RenderingProject();
+    MGE::AbstractGame* game = new RP::RenderingProject();
     game->initialize();
     game->run();
 

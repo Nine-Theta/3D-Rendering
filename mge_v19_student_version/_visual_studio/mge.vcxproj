@@ -172,6 +172,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -342,6 +343,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClInclude>
+    <ClInclude Include="..\src\RenderingProject_Engine\Core\GameObject.hpp" />
+    <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -366,6 +369,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClCompile>
+    <ClCompile Include="..\src\RenderingProject_Engine\Core\GameObject.cpp" />
+    <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
