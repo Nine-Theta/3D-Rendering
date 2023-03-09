@@ -26,6 +26,7 @@
 #include "RenderingProject/RenderingProject.hpp"
 
 #include "RenderingProject_Engine/Core/GameObject.hpp"
+#include "RenderingProject/Behaviours/MouselookBehaviour.hpp"
 
 namespace RP {
     //construct the game class into _window, _renderer and hud (other parts are initialized by build)
@@ -68,6 +69,7 @@ namespace RP {
         RPEngine::Model* sphereModel = new RPEngine::Model(sphereMeshS, runicStoneMaterial, glm::vec3(2.5, 2.5, 2.5));
         RPEngine::Model* floorModel = new RPEngine::Model(planeMeshDefault, runicStoneMaterial, glm::vec3(5, 5, 5));
         RPEngine::Model* lightModel = new RPEngine::Model(cubeMeshF, lightMaterial, glm::vec3(0.1f, 0.1f, 0.1f));
+        RPEngine::Model* cubeModel = new RPEngine::Model(cubeMeshF, runicStoneMaterial, glm::vec3(0.1f, 0.1f, 0.1f));
 
         //SCENE SETUP
 
@@ -90,12 +92,23 @@ namespace RP {
         //Note how the texture material is able to detect the number of lights in the scene
         //even though it doesn't implement any lighting yet!
 
-        MGE::Light* light = new MGE::Light("light", glm::vec3(0, 4, 0));
+        MGE::Light* light = new MGE::Light("light", glm::vec3(0, 0, -5));
         light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
         light->setMesh(cubeMeshF);
         light->setMaterial(lightMaterial);
-        light->setBehaviour(new MGE::KeysBehaviour(25));
+        //light->setBehaviour(new MGE::KeysBehaviour(25));
         _world->add(light);
+
+        RPEngine::GameObject* camFocus = new RPEngine::GameObject("focus", glm::vec3(0, 2, 0), _world);
+        camFocus->setBehaviour(new MGE::KeysBehaviour(5));
+        light->setParent(camFocus);
+
+        RPEngine::GameObject* cubeChild = new RPEngine::GameObject("focus", glm::vec3(4, 0, 0), cubeModel, camFocus);
+
+        camera->setParent(camFocus);
+        camera->setBehaviour(new RP::MouselookBehaviour());
+
+        
 
     }
 

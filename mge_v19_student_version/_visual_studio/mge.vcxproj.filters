@@ -29,11 +29,17 @@
     <Filter Include="MGE Source files\RenderProject_Engine\Core">
       <UniqueIdentifier>{fac90f52-4170-4cb0-b9e5-acb83a70c113}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MGE Source files\RenderingProject\Behaviours">
+      <UniqueIdentifier>{e15ae61a-eb5b-4d28-8b6d-e6523ec13d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MGE Source files\RenderingProject\Materials">
+      <UniqueIdentifier>{17857f9d-f629-4f9f-b67c-bc59b30cfeca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MGE Source files\RenderProject_Engine\Util">
+      <UniqueIdentifier>{b74cc0c7-1491-47b4-ab4c-74e2f231653f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\glm.hpp">
-      <Filter>MGE Source files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\mge\behaviours\AbstractBehaviour.hpp">
       <Filter>MGE Source files\mge\behaviours</Filter>
     </ClInclude>
@@ -100,6 +106,12 @@
     <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp">
       <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\glm.hpp">
+      <Filter>MGE Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\Behaviours\MouselookBehaviour.hpp">
+      <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -164,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp">
       <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject\Behaviours\MouselookBehaviour.cpp">
+      <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

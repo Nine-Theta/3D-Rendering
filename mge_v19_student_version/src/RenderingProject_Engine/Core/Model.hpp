@@ -32,7 +32,8 @@ namespace RP {
 
 
         private:
-
+            Model(const Model&);
+            Model& operator= (const Model&);
         };
     }
 }

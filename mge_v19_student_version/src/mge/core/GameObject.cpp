@@ -169,6 +169,7 @@ namespace MGE {
 
     void GameObject::rotate(float pAngle, glm::vec3 pAxis)
     {
+        //_transform = glm::mat4();
         setTransform(glm::rotate(_transform, pAngle, pAxis));
     }
 
