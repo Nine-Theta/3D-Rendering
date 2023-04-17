@@ -35,9 +35,9 @@ namespace RP {
 
 			//_owner->setLocalPosition(_owner->getParent()->getLocalPosition());
 
-			_owner->rotate(glm::radians( 1 * pStep), glm::vec3(0,-1,0));
+			//_owner->rotate(glm::radians( 1 * pStep), glm::vec3(0,-1,0));
 
-			//_rotationTotal * 5;
+			_rotationTotal * 5;
 
 			_owner->rotate(_rotationTotal);
 

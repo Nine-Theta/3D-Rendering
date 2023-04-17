@@ -2,12 +2,14 @@
 #define RP_GAMEOBJECT_HPP
 
 #include "mge/core/GameObject.hpp"
-//#include "mge/behaviours/AbstractBehaviour.hpp"
+#include "mge/behaviours/AbstractBehaviour.hpp"
 
 #include "RenderingProject_Engine/Core/Model.hpp"
 
 namespace RP {
 	namespace RPEngine {
+
+		class Model;
 
 		class GameObject : public MGE::GameObject
 		{
@@ -18,10 +20,11 @@ namespace RP {
 			GameObject(const std::string& pName, const glm::vec3& pPosition, Model* pModel , MGE::GameObject* pParent);
 			virtual ~GameObject();
 
-			void GameObject::setBehaviour(RP::MouselookBehaviour* pBehaviour);
 
-			//void rotate(glm::mat4 pRotation);
-			//void rotate(float pAngle, glm::vec3 pAxis, bool f = false);
+			void setBehaviour(MGE::AbstractBehaviour* pBehaviour);
+
+			void rotate(glm::mat4 pRotation);
+			void rotate(float pAngle, glm::vec3 pAxis, bool f = false);
 						
 
 		private:

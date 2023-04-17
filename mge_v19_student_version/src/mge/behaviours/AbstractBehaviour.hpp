@@ -1,8 +1,12 @@
 #ifndef ABSTRACTBEHAVIOUR_HPP
 #define ABSTRACTBEHAVIOUR_HPP
 
+
+#include "RenderingProject_Engine/Core/GameObject.hpp"
+
+namespace RP { namespace RPEngine { class GameObject; } }
+
 namespace MGE {
-    class GameObject;
 
     /**
      * An AbstractBehaviour allows you to attach reusable behaviours to GameObjects (steering, rotating, billboarding, etc).
@@ -19,14 +23,14 @@ namespace MGE {
         virtual ~AbstractBehaviour() = 0;
 
         //for internal administration, do not use directly
-        virtual void setOwner(GameObject* pGameObject);
+        virtual void setOwner(RP::RPEngine::GameObject* pGameObject);
 
         //behaviour should be able to update itself every step and MUST be implemented
         virtual void update(float pStep) = 0;
 
     protected:
 
-        GameObject* _owner;
+        RP::RPEngine::GameObject* _owner;
 
     private:
 

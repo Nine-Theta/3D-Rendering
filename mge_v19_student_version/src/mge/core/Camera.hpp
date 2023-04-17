@@ -3,6 +3,7 @@
 
 #include <string>
 #include "mge/core/GameObject.hpp"
+#include "RenderingProject_Engine/Core/GameObject.hpp"
 
 
 namespace MGE {
@@ -12,7 +13,7 @@ namespace MGE {
      * The camera's own transform is used to generate a world-to-view matrix by taking the inverse of the camera transform.
      * The camera's perspective matrix is used in the MVP matrix creation.
      */
-    class Camera : public GameObject
+    class Camera : public RP::RPEngine::GameObject
     {
     public:
         Camera(

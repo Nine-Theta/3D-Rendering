@@ -50,7 +50,7 @@ namespace MGE {
 		AbstractMaterial* getMaterial() const;
 
 		//behaviour is expected to be unique per game object, in general do NOT share them between objects
-		void setBehaviour(AbstractBehaviour* pBehaviour);
+		//void setBehaviour(AbstractBehaviour* pBehaviour);
 		AbstractBehaviour* getBehaviour() const;
 
 		virtual void update(float pStep);

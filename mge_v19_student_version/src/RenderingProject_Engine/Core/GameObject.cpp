@@ -42,21 +42,22 @@ namespace RP {
 
 		}
 
-
-		void GameObject::setBehaviour(RP::MouselookBehaviour* pBehaviour)
+		void GameObject::setBehaviour(MGE::AbstractBehaviour* pBehaviour)
 		{
 			_behaviour = pBehaviour;
 			_behaviour->setOwner(this);
 		}
 
-		/*
+		
 		void GameObject::rotate(float pAngle, glm::vec3 pAxis, bool f)
 		{
-			setTransform(glm::rotate(_transform, pAngle, pAxis));
-		}*/
+			MGE::GameObject::rotate(pAngle, pAxis);
 
-		//void GameObject::rotate(glm::mat4 pRotation) {
-			//setTransform(_transform);
-		//}
+			//setTransform(glm::rotate(_transform, pAngle, pAxis));
+		}
+
+		void GameObject::rotate(glm::mat4 pRotation) {
+			setTransform(_transform);
+		}
 	}
 }

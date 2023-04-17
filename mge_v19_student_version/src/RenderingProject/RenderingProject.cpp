@@ -96,7 +96,7 @@ namespace RP {
         light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
         light->setMesh(cubeMeshF);
         light->setMaterial(lightMaterial);
-        //light->setBehaviour(new MGE::KeysBehaviour(25));
+        light->setBehaviour(new MGE::KeysBehaviour(25));
         _world->add(light);
 
         RPEngine::GameObject* camFocus = new RPEngine::GameObject("focus", glm::vec3(0, 2, 0), _world);

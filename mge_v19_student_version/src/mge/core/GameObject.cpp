@@ -75,12 +75,12 @@ namespace MGE {
     {
         return _mesh;
     }
-
+    /*
     void GameObject::setBehaviour(AbstractBehaviour* pBehaviour)
     {
-        _behaviour = pBehaviour;
-        _behaviour->setOwner(this);
-    }
+        //_behaviour = pBehaviour;
+        //_behaviour->setOwner(this);
+    }/**/
 
     AbstractBehaviour* GameObject::getBehaviour() const
     {
