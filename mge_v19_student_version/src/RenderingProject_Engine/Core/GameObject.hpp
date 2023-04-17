@@ -23,9 +23,24 @@ namespace RP {
 
 			void setBehaviour(MGE::AbstractBehaviour* pBehaviour);
 
+			void setLocalPosition(glm::vec3 pPosition);
+			glm::vec3 getLocalPosition();
+
+			void setLocalRotation(glm::vec4 pRotation);
+			void setLocalRotation(glm::vec3 pAxis, float pAngle);
+			glm::vec4 getLocalRotation();
+
+			void translate(glm::vec3 pTranslation);
+			void rotate(float pAngle, glm::vec3 pAxis);
 			void rotate(glm::mat4 pRotation);
-			void rotate(float pAngle, glm::vec3 pAxis, bool f = false);
-						
+
+		protected:
+			/// <summary>
+			/// Axis(xyz) Angle(w)
+			/// </summary>
+			glm::vec4 _rotation;
+			glm::vec3 _position;
+
 
 		private:
 			GameObject(const GameObject&);

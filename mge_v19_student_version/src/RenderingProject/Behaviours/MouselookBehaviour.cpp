@@ -15,7 +15,7 @@ namespace RP {
 		glm::ivec2 _mousePos = glm::ivec2(0,0);
 		glm::ivec2 _mouseOldPos = glm::ivec2(0,0);
 		glm::vec2 _mouseDelta = glm::vec2(0.0f, 0.0f);
-		glm::mat4 _rotationTotal = glm::mat4(1.0f);
+		glm::mat4 _rotationTotal = glm::mat4();
 	}
 
 	MouselookBehaviour::~MouselookBehaviour() {
@@ -37,12 +37,14 @@ namespace RP {
 
 			//_owner->rotate(glm::radians( 1 * pStep), glm::vec3(0,-1,0));
 
-			_rotationTotal * 5;
+			//_rotationTotal *= _mouseDelta.y;
 
-			_owner->rotate(_rotationTotal);
+			//_rotationTotal += 5 * pStep;
+			//_owner->rotate(glm::rotate(_rotationTotal, glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1, 0, 0)));
+			//_owner->rotate(_rotationTotal);
 
 
-			//_owner->rotate(glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1,0,0));
+			_owner->rotate(glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1,0,0));
 		}
 
 		_mouseOldPos = _mousePos;

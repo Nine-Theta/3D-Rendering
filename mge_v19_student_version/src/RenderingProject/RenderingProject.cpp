@@ -74,7 +74,7 @@ namespace RP {
         //SCENE SETUP
 
        //add camera first (it will be updated last)
-        MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 6, 7));
+        MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 6, 17));
         camera->rotate(glm::radians(-40.0f), glm::vec3(1, 0, 0));
         _world->add(camera);
         _world->setMainCamera(camera);
