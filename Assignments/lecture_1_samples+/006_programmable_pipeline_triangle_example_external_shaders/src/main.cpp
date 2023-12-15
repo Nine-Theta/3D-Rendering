@@ -38,7 +38,9 @@ int main() {
 	//Create the shader program
 	//GLuint programID = ShaderUtil::createProgram("vertexshader.vert", "fragmentshader.frag");
 	//GLuint programID = ShaderUtil::createProgram("vertcheckers.vert", "fragcheckers.frag");
-	GLuint programID = ShaderUtil::createProgram("vertLight.vert", "fragLight.frag");
+	//GLuint programID = ShaderUtil::createProgram("vertLight.vert", "fragLight.frag");
+	//GLuint programID = ShaderUtil::createProgram("vertColRow.vert", "fragColRow.frag");
+	GLuint programID = ShaderUtil::createProgram("vertCombined.vert", "fragCombined.frag");
 
 	PolygonManager manager(programID);
 
@@ -50,7 +52,11 @@ int main() {
 		-0.5f, 0.5f, 0,
 		0.5f, -0.5f, 0,
 		0.5f, 0.5f, 0,
-		-0.5f, 0.5f, 0
+		-0.5f, 0.5f, 0,
+
+		0.5f, 0.5f, 0,
+		0.5f, -0.5f, 0,
+		1, -0.5f, 0,
 	};
 
 	GLuint vertBufferId = manager.BufferArrayTriangles(*vertices, sizeof(vertices));
@@ -62,13 +68,21 @@ int main() {
 		0,0,1,
 		0,1,0,
 		0,1,1,
-		0,0,1
+		0,0,1,
+
+		0,1,1,
+		0,1,0,
+		.5,0,0
 	};
 
 	GLuint colorBufferId = manager.BufferArrayColors(*colors, sizeof(colors));
 
 
 	sf::Clock clock;
+
+	sf::Vector2f array;
+	array.x = 4;
+	array.y = 8;
 
 	float size = 2;
 	float angle = 45;
@@ -78,15 +92,27 @@ int main() {
 	glClearColor(0, 0, 0, 1);
 	while (window.isOpen()) {
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			size += 0.005f;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			size -= 0.005f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			array.x -= 0.1f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			array.x += 0.1f;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			angle += 0.005f;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			angle -= 0.005f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			array.y -= 0.1f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			array.y += 0.1f;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+			angle += 0.05f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			angle -= 0.05f;
+
+
+		/*
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			size += 0.05f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			size -= 0.05f;*/
 		
 		mouse = (sf::Vector2f)sf::Mouse::getPosition(window);
 
@@ -107,13 +133,14 @@ int main() {
 		//offset
 		float elapsedTime = clock.getElapsedTime().asSeconds();
 		glUniform2f(glGetUniformLocation(programID, "offset"), 0.5f * cos(elapsedTime), 0.5f * sin(elapsedTime));
+		glUniform2f(glGetUniformLocation(programID, "array"), array.x, array.y);
 		glUniform1f(glGetUniformLocation(programID, "size"), size);
 		glUniform1f(glGetUniformLocation(programID, "angle"), angle);
 		glUniform3f(glGetUniformLocation(programID, "mouse"), mouse.x, 1 - mouse.y, sqrt(mouse.x*mouse.x + mouse.y*mouse.y));
 		glUniform1f(glGetUniformLocation(programID, "lightMult"), 3.0f);
 
 		//manager.RenderModel(vertexBufferId,colorBufferId,3);
-		manager.RenderModel(vertBufferId, colorBufferId, 6);
+		manager.RenderModel(vertBufferId, colorBufferId, 9);
 
 		//display it
 		window.display();
