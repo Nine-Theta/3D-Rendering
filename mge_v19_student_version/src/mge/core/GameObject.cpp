@@ -1,16 +1,40 @@
 #include <iostream>
 #include "GameObject.hpp"
 #include "mge/behaviours/AbstractBehaviour.hpp"
+#include "RenderingProject_Engine/Core/Model.hpp"
 
 
 namespace MGE {
 
     GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition)
         : _name(pName), _transform(glm::translate(pPosition)), _parent(nullptr), _children(),
-        _mesh(nullptr), _behaviour(nullptr), _material(nullptr), _world(nullptr)
+        _mesh(nullptr), _behaviour(nullptr), _material(nullptr), _world(nullptr), _position(pPosition)
+    {
+        //GameObject(pName, pPosition, nullptr, nullptr, nullptr, nullptr, nullptr);
+    }
+
+    GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent)
+    { 
+        GameObject(pName, pPosition, pParent, nullptr, nullptr, nullptr, nullptr);
+    }
+
+    GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh, MGE::AbstractMaterial* pMaterial) {
+        GameObject(pName, pPosition, pParent, pMesh, nullptr, pMaterial, nullptr);
+    }
+    
+    GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, RP::RPEngine::Model* pModel) {
+        GameObject(pName, pPosition, pParent, pModel->getMesh(), nullptr, pModel->getMaterial(), nullptr);
+        scale(pModel->getScale());
+    }
+
+    GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent,
+        MGE::Mesh* pMesh, MGE::AbstractBehaviour* pBehaviour, MGE::AbstractMaterial* pMaterial, MGE::World* pWorld)
+        : _name(pName), _transform(glm::translate(pPosition)), _parent(pParent), _children(),
+        _mesh(pMesh), _behaviour(pBehaviour), _material(pMaterial), _world(pWorld), _position(pPosition)
 
     {
     }
+
 
     GameObject::~GameObject()
     {
@@ -200,4 +224,62 @@ namespace MGE {
     GameObject* GameObject::getChildAt(int pIndex) const {
         return _children[pIndex];
     }
+
+    //Added:
+    void GameObject::setBehaviour(MGE::AbstractBehaviour* pBehaviour)
+    {
+        _behaviour = pBehaviour;
+        _behaviour->setOwner(this);
+    }
+    /*
+    void GameObject::setLocalPosition(glm::vec3 pPosition) {
+        glm::mat4 temp = glm::mat4(1);
+        glm::rotate(temp, _rotation.w, glm::vec3(_rotation));
+        _position = pPosition;
+        temp[3] = glm::vec4(pPosition, 1);
+        setTransform(temp);
+    }*/
+
+    /// <summary>
+    /// Axis(xyz) Angle(w)
+    /// </summary>
+    void GameObject::setLocalRotation(glm::vec4 pRotation) {
+        glm::mat4 temp = glm::mat4(1);
+        glm::rotate(temp, pRotation.w, glm::vec3(pRotation));
+        _rotation = pRotation;
+        temp[3] = glm::vec4(_position, 1);
+        setTransform(temp);
+    }
+
+    void GameObject::setLocalRotation(float pAngle, glm::vec3 pAxis) {
+        glm::mat4 temp = glm::mat4(1);
+        glm::rotate(temp, pAngle, glm::vec3(pAxis));
+        _rotation = glm::vec4(pAxis, pAngle);
+        temp[3] = glm::vec4(_position, 1);
+        setTransform(temp);
+    }
+
+    glm::vec4 GameObject::getLocalRotation() {
+        return _rotation;
+    }
+
+    /*
+    void GameObject::rotate(float pAngle, glm::vec3 pAxis)
+    {
+        setLocalRotation(pAngle + _rotation.w, glm::normalize(glm::vec3(_rotation) * pAxis));
+        //_rotation * glm::vec4(pAxis, pAngle);
+
+
+
+        //MGE::GameObject::rotate(pAngle, pAxis);
+
+        //glm::inv
+
+        //setTransform(glm::rotate(_transform, pAngle, pAxis));
+    }
+
+    void GameObject::rotate(glm::mat4 pRotation) {
+        //setTransform(_transform += pRotation);
+        //setTransform(_transform);
+    }*/
 }

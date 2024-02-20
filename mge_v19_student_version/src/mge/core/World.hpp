@@ -7,7 +7,7 @@ namespace MGE {
     class Camera;
     class Light;
 
-    class World : public MGE::GameObject
+    class World : public GameObject
     {
     public:
         World();

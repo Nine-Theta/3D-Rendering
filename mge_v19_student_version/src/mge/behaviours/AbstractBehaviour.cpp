@@ -8,7 +8,7 @@ namespace MGE {
 		_owner = nullptr;
 	}
 
-	void AbstractBehaviour::setOwner(RP::RPEngine::GameObject* pOwner) {
+	void AbstractBehaviour::setOwner(MGE::GameObject* pOwner) {
 		_owner = pOwner;
 	}
 }

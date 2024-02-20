@@ -12,6 +12,7 @@
 #include "mge/core/Camera.hpp"
 #include "mge/core/GameObject.hpp"
 
+
 #include "mge/materials/AbstractMaterial.hpp"
 #include "mge/materials/ColorMaterial.hpp"
 #include "mge/materials/TextureMaterial.hpp"
@@ -25,8 +26,8 @@
 #include "RenderingProject/config.hpp"
 #include "RenderingProject/RenderingProject.hpp"
 
-#include "RenderingProject_Engine/Core/GameObject.hpp"
 #include "RenderingProject/Behaviours/MouselookBehaviour.hpp"
+#include "RenderingProject_Engine/Core/Model.hpp"
 
 namespace RP {
     //construct the game class into _window, _renderer and hud (other parts are initialized by build)
@@ -80,11 +81,11 @@ namespace RP {
         _world->setMainCamera(camera);
 
         //add the floor
-        RPEngine::GameObject* plane = new RPEngine::GameObject("plane", glm::vec3(0, 0, 0), floorModel, _world);
+        MGE::GameObject* plane = new MGE::GameObject("plane", glm::vec3(0, 0, 0), _world, floorModel);
 
 
         //add a spinning sphere
-        RPEngine::GameObject* sphere = new RPEngine::GameObject("sphere", glm::vec3(0, 0, 0), sphereModel, _world);
+        MGE::GameObject* sphere = new MGE::GameObject("sphere", glm::vec3(0, 0, 0), _world, sphereModel);
         sphere->setBehaviour(new MGE::RotatingBehaviour());
 
         //add a light. Note that the light does ABSOLUTELY ZIP! NADA ! NOTHING !
@@ -96,14 +97,14 @@ namespace RP {
         light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
         light->setMesh(cubeMeshF);
         light->setMaterial(lightMaterial);
-        light->setBehaviour(new MGE::KeysBehaviour(25));
+        //light->setBehaviour(new MGE::KeysBehaviour(25));
         _world->add(light);
 
-        RPEngine::GameObject* camFocus = new RPEngine::GameObject("focus", glm::vec3(0, 2, 0), _world);
+        MGE::GameObject* camFocus = new MGE::GameObject("focus", glm::vec3(0, 2, 0), _world);
         camFocus->setBehaviour(new MGE::KeysBehaviour(5));
         light->setParent(camFocus);
 
-        RPEngine::GameObject* cubeChild = new RPEngine::GameObject("focus", glm::vec3(4, 0, 0), cubeModel, camFocus);
+        MGE::GameObject* cubeChild = new MGE::GameObject("focus", glm::vec3(4, 0, 0), camFocus, cubeModel);
 
         camera->setParent(camFocus);
         camera->setBehaviour(new RP::MouselookBehaviour());

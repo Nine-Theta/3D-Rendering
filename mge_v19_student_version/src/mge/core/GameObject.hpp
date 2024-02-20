@@ -4,6 +4,16 @@
 #include <vector>
 #include "glm.hpp"
 
+//#include "mge/behaviours/AbstractBehaviour.hpp"
+
+//#include "RenderingProject_Engine/Core/Model.hpp"
+
+namespace RP {
+	namespace RPEngine {
+		class Model;
+	}
+}
+
 namespace MGE {
 
 	class AbstractCollider;
@@ -12,6 +22,7 @@ namespace MGE {
 	class World;
 	class Mesh;
 
+
 	/**
 	 * A GameObject wraps all data required to display an object, but knows nothing about OpenGL or rendering.
 	 */
@@ -19,6 +30,14 @@ namespace MGE {
 	{
 	public:
 		GameObject(const std::string& pName = nullptr, const glm::vec3& pPosition = glm::vec3(0.0f, 0.0f, 0.0f));
+		
+		//Added:
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh, MGE::AbstractMaterial* pMaterial);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, RP::RPEngine::Model* pModel);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh, MGE::AbstractBehaviour* pBehaviour, MGE::AbstractMaterial* pMaterial, MGE::World* pWorld);
+		//
+		
 		virtual ~GameObject();
 
 		void setName(const std::string& pName);
@@ -70,6 +89,15 @@ namespace MGE {
 		int getChildCount() const;
 		GameObject* getChildAt(int pIndex) const;
 
+		//Added:
+		void setBehaviour(MGE::AbstractBehaviour* pBehaviour);
+		
+		void setLocalRotation(glm::vec4 pRotation);
+		void setLocalRotation(float pAngle, glm::vec3 pAxis);
+		glm::vec4 getLocalRotation();
+
+		//void rotate(glm::mat4 pRotation);
+
 	protected:
 		std::string _name;
 		glm::mat4 _transform;
@@ -88,6 +116,15 @@ namespace MGE {
 
 		//used to pass on pointer to the world to a gameobject
 		virtual void _setWorldRecursively(World* pWorld);
+
+		//Added:
+
+		glm::vec3 _position;
+
+		/// <summary>
+		/// Axis(xyz) Angle(w)
+		/// </summary>
+		glm::vec4 _rotation;
 
 	private:
 		GameObject(const GameObject&);

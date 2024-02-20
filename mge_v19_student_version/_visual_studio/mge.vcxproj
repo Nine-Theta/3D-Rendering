@@ -344,7 +344,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClInclude>
-    <ClInclude Include="..\src\RenderingProject_Engine\Core\GameObject.hpp" />
     <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -371,7 +370,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClCompile>
-    <ClCompile Include="..\src\RenderingProject_Engine\Core\GameObject.cpp" />
     <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

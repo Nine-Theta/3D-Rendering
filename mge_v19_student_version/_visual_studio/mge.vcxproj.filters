@@ -100,9 +100,6 @@
     <ClInclude Include="..\src\RenderingProject\RenderingProject.hpp">
       <Filter>MGE Source files\RenderingProject</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\RenderingProject_Engine\Core\GameObject.hpp">
-      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp">
       <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
     </ClInclude>
@@ -170,9 +167,6 @@
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject\RenderingProject.cpp">
       <Filter>MGE Source files\RenderingProject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\RenderingProject_Engine\Core\GameObject.cpp">
-      <Filter>MGE Source files\RenderProject_Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp">
       <Filter>MGE Source files\RenderProject_Engine\Core</Filter>

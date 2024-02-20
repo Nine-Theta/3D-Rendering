@@ -2,7 +2,10 @@
 #define MODEL_HPP
 
 #include "mge/core/Mesh.hpp"
-#include "mge/materials/AbstractMaterial.hpp"
+
+namespace MGE {
+    class AbstractMaterial;
+}
 
 namespace RP {
     namespace RPEngine {

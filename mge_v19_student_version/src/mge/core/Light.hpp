@@ -3,7 +3,6 @@
 
 #include "glm.hpp"
 #include "mge/core/GameObject.hpp"
-#include "RenderingProject_Engine/Core/GameObject.hpp"
 
 
 namespace MGE {
@@ -12,7 +11,7 @@ namespace MGE {
 	 * Exercise for the student: implement the Light class...
 	 * Imagine things like setLightType, setLightIntensity, setFalloffAngle etc, see the corresponding lectures
 	 */
-	class Light : public RP::RPEngine::GameObject
+	class Light : public GameObject
 	{
 	public:
 		Light(const std::string& aName = nullptr, const glm::vec3& aPosition = glm::vec3(2.0f, 10.0f, 5.0f));

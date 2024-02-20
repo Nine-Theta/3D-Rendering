@@ -1,11 +1,12 @@
 #ifndef MOUSELOOKBEHAVIOR_HPP
 #define MOUSELOOKBEHAVIOR_HPP
 
+#include "glm.hpp"
+
 #include "mge/behaviours/AbstractBehaviour.hpp"
 
-#include "RenderingProject_Engine/Core/GameObject.hpp"
+#include "mge/core/GameObject.hpp"
 
-#include "glm.hpp"
 
 namespace RP {
 
@@ -15,7 +16,7 @@ namespace RP {
 		MouselookBehaviour();
 		virtual ~MouselookBehaviour();
 
-		virtual void setOwner(RPEngine::GameObject* pGameObject);
+		virtual void setOwner(MGE::GameObject* pGameObject);
 
 		virtual void update(float pStep);
 

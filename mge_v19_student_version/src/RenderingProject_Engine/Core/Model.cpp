@@ -1,4 +1,5 @@
 #include "RenderingProject_Engine/Core/Model.hpp"
+#include "mge/materials/AbstractMaterial.hpp"
 
 
 namespace RP {

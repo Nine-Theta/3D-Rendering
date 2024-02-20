@@ -22,7 +22,7 @@ namespace RP {
 
 	}
 
-	void MouselookBehaviour::setOwner(RPEngine::GameObject* pOwner) {
+	void MouselookBehaviour::setOwner(MGE::GameObject* pOwner) {
 		_owner = pOwner;
 	}
 
