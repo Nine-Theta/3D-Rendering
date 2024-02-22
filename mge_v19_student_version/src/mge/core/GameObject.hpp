@@ -32,10 +32,8 @@ namespace MGE {
 		GameObject(const std::string& pName = nullptr, const glm::vec3& pPosition = glm::vec3(0.0f, 0.0f, 0.0f));
 		
 		//Added:
-		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent);
-		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh, MGE::AbstractMaterial* pMaterial);
-		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, RP::RPEngine::Model* pModel);
-		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh, MGE::AbstractBehaviour* pBehaviour, MGE::AbstractMaterial* pMaterial, MGE::World* pWorld);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, RP::RPEngine::Model* pModel, MGE::GameObject* pParent = nullptr);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh = nullptr, MGE::AbstractBehaviour* pBehaviour = nullptr, MGE::AbstractMaterial* pMaterial = nullptr, MGE::World* pWorld = nullptr);
 		//
 		
 		virtual ~GameObject();

@@ -2,6 +2,7 @@
 
 #include "mge/core/AbstractGame.hpp"
 #include "RenderingProject/RenderingProject.hpp"
+#include "mge/MGEDemo.hpp"
 
 /**
  * Main entry point for the Micro Engine.
@@ -23,6 +24,7 @@ int main()
     std::cout << "Starting Game" << std::endl;
 
     MGE::AbstractGame* game = new RP::RenderingProject();
+    //MGE::AbstractGame* game = new MGE::MGEDemo();
     game->initialize();
     game->run();
 

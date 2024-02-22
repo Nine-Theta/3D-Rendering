@@ -6,16 +6,21 @@
 
 
 #include "mge/behaviours/AbstractBehaviour.hpp"
+#include "mge/core/Camera.hpp"
 
 
 
 namespace RP {
 
-	MouselookBehaviour::MouselookBehaviour() : MGE::AbstractBehaviour() {
+	MouselookBehaviour::MouselookBehaviour(MGE::Camera* pCamera) : MGE::AbstractBehaviour() {
 		glm::ivec2 _mousePos = glm::ivec2(0,0);
-		glm::ivec2 _mouseOldPos = glm::ivec2(0,0);
+		glm::ivec2 _oldMousePos = glm::ivec2(0,0);
 		glm::vec2 _mouseDelta = glm::vec2(0.0f, 0.0f);
+		glm::vec2 _nMouseDelta = glm::vec2(0.0f, 0.0f);
+
 		glm::mat4 _rotationTotal = glm::mat4();
+
+		_camera = pCamera;
 	}
 
 	MouselookBehaviour::~MouselookBehaviour() {
@@ -30,7 +35,7 @@ namespace RP {
 		_mousePos = glm::ivec2(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-			_mouseDelta = _mousePos - _mouseOldPos;
+			_mouseDelta = _mousePos - _oldMousePos;
 			//glm::vec3 temp = _owner->getLocalPosition() - _owner->getParent()->getLocalPosition();
 
 			//_owner->setLocalPosition(_owner->getParent()->getLocalPosition());
@@ -43,10 +48,11 @@ namespace RP {
 			//_owner->rotate(glm::rotate(_rotationTotal, glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1, 0, 0)));
 			//_owner->rotate(_rotationTotal);
 
-
-			_owner->rotate(glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1,0,0));
+			
+			_camera->rotate(glm::radians(_mouseDelta.y * 20 * pStep), glm::vec3(-1,0,0));
+			_owner->rotate(glm::radians(_mouseDelta.x * 20 * pStep), glm::vec3(0,-1,0));
 		}
 
-		_mouseOldPos = _mousePos;
+		_oldMousePos = _mousePos;
 	}
 }
