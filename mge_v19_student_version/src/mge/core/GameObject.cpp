@@ -8,13 +8,13 @@ namespace MGE {
 
 	GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition)
 		: _name(pName), _transform(glm::translate(pPosition)), _parent(nullptr), _children(),
-		_mesh(nullptr), _behaviour(nullptr), _material(nullptr), _world(nullptr), _position(pPosition)
+		_mesh(nullptr), _behaviours(), _material(nullptr), _world(nullptr), _position(pPosition)
 	{
 	}
 
 	GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, RP::RPEngine::Model* pModel, MGE::GameObject* pParent)
 		: _name(pName), _transform(glm::translate(pPosition)), _parent(pParent), _children(),
-		_mesh(pModel->getMesh()), _behaviour(nullptr), _material(pModel->getMaterial()), _position(pPosition)
+		_mesh(pModel->getMesh()), _behaviours(), _material(pModel->getMaterial()), _position(pPosition)
 	{
 		setParent(pParent);
 		scale(pModel->getScale());
@@ -23,10 +23,11 @@ namespace MGE {
 	GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent,
 		MGE::Mesh* pMesh, MGE::AbstractBehaviour* pBehaviour, MGE::AbstractMaterial* pMaterial, MGE::World* pWorld)
 		: _name(pName), _transform(glm::translate(pPosition)), _parent(pParent), _children(),
-		_mesh(pMesh), _behaviour(pBehaviour), _material(pMaterial), _world(pWorld), _position(pPosition)
+		_mesh(pMesh), _behaviours(), _material(pMaterial), _world(pWorld), _position(pPosition)
 
 	{
 		setParent(pParent);
+		addBehaviour(pBehaviour);
 	}
 
 	GameObject::~GameObject()
@@ -92,16 +93,22 @@ namespace MGE {
 	{
 		return _mesh;
 	}
-	/*
+	
+	/// <summary>
+	/// compatiblity with older code, just calls addBehaviour()
+	/// </summary>
 	void GameObject::setBehaviour(AbstractBehaviour* pBehaviour)
 	{
-		//_behaviour = pBehaviour;
-		//_behaviour->setOwner(this);
-	}/**/
+		GameObject::addBehaviour(pBehaviour);
+	}
 
+	/// <summary>
+	/// Returns the first behaviour the GameObject has.
+	/// Use getBehaviours() for the full list 
+	/// </summary>
 	AbstractBehaviour* GameObject::getBehaviour() const
 	{
-		return _behaviour;
+		return _behaviours.front();
 	}
 
 	void GameObject::setParent(GameObject* pParent) {
@@ -193,8 +200,8 @@ namespace MGE {
 	void GameObject::update(float pStep)
 	{
 		//make sure behaviour is updated after worldtransform is set
-		if (_behaviour) {
-			_behaviour->update(pStep);
+		for (int i = _behaviours.size() - 1; i >= 0; --i) {
+			_behaviours[i]->update(pStep);
 		}
 
 		for (int i = _children.size() - 1; i >= 0; --i) {
@@ -219,11 +226,36 @@ namespace MGE {
 	}
 
 	//Added:
-	void GameObject::setBehaviour(MGE::AbstractBehaviour* pBehaviour)
+
+	/// <summary>
+	/// Adds a behaviour to the GameObject, which should be a new behaviour specific for this gameobject.
+	/// If it isn't, it will be removed from the old owner and set to this gameobject.
+	/// </summary>
+	void GameObject::addBehaviour(MGE::AbstractBehaviour* pBehaviour)
 	{
-		_behaviour = pBehaviour;
-		_behaviour->setOwner(this);
+		if (pBehaviour == nullptr) return;
+		if (pBehaviour->getOwner() != nullptr)
+			pBehaviour->getOwner()->removeBehaviour(pBehaviour);
+
+		_behaviours.push_back(pBehaviour);
+		_behaviours.back()->setOwner(this);
 	}
+
+	void GameObject::removeBehaviour(MGE::AbstractBehaviour* pBehaviour)
+	{
+		for (auto i = _behaviours.begin(); i != _behaviours.end(); ++i) {
+			if (*i == pBehaviour) {
+				_behaviours.erase(i);
+				pBehaviour->setOwner(nullptr);
+				return;
+			}
+		}
+	}
+
+	std::vector<MGE::AbstractBehaviour*>* GameObject::getBehaviours() {
+		return &_behaviours;
+	}
+
 	/*
 	void GameObject::setLocalPosition(glm::vec3 pPosition) {
 		glm::mat4 temp = glm::mat4(1);
@@ -275,4 +307,6 @@ namespace MGE {
 		//setTransform(_transform += pRotation);
 		//setTransform(_transform);
 	}*/
+
+	//
 }

@@ -11,4 +11,11 @@ namespace MGE {
 	void AbstractBehaviour::setOwner(MGE::GameObject* pOwner) {
 		_owner = pOwner;
 	}
+
+	//Added:
+
+	MGE::GameObject* AbstractBehaviour::getOwner() {
+		return _owner;
+	}
+	//
 }

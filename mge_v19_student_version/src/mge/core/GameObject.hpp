@@ -67,7 +67,7 @@ namespace MGE {
 		AbstractMaterial* getMaterial() const;
 
 		//behaviour is expected to be unique per game object, in general do NOT share them between objects
-		//void setBehaviour(AbstractBehaviour* pBehaviour);
+		void setBehaviour(AbstractBehaviour* pBehaviour);
 		AbstractBehaviour* getBehaviour() const;
 
 		virtual void update(float pStep);
@@ -88,7 +88,9 @@ namespace MGE {
 		GameObject* getChildAt(int pIndex) const;
 
 		//Added:
-		void setBehaviour(MGE::AbstractBehaviour* pBehaviour);
+		void addBehaviour(MGE::AbstractBehaviour* pBehaviour);
+		void removeBehaviour(MGE::AbstractBehaviour* pBehaviour);
+		std::vector<MGE::AbstractBehaviour*>* getBehaviours();
 		
 		void setLocalRotation(glm::vec4 pRotation);
 		void setLocalRotation(float pAngle, glm::vec3 pAxis);
@@ -104,7 +106,6 @@ namespace MGE {
 		std::vector<GameObject*> _children;
 
 		Mesh* _mesh;
-		AbstractBehaviour* _behaviour;
 		AbstractMaterial* _material;
 		World* _world;
 
@@ -116,6 +117,8 @@ namespace MGE {
 		virtual void _setWorldRecursively(World* pWorld);
 
 		//Added:
+
+		std::vector<AbstractBehaviour*> _behaviours;
 
 		glm::vec3 _position;
 

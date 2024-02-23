@@ -24,6 +24,11 @@ namespace MGE {
         //for internal administration, do not use directly
         virtual void setOwner(GameObject* pGameObject);
 
+        //Addded:
+
+        virtual GameObject* getOwner();
+        //
+
         //behaviour should be able to update itself every step and MUST be implemented
         virtual void update(float pStep) = 0;
 
