@@ -5,8 +5,6 @@
 
 #include "mge/behaviours/AbstractBehaviour.hpp"
 
-#include "mge/core/GameObject.hpp"
-
 namespace MGE {
 	class Camera;
 }

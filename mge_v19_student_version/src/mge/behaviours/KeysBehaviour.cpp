@@ -2,8 +2,6 @@
 #include "mge/core/GameObject.hpp"
 #include <SFML/Window/Keyboard.hpp>
 
-#include "mge/behaviours/AbstractBehaviour.hpp"
-
 namespace MGE {
 	KeysBehaviour::KeysBehaviour(float pMoveSpeed, float pTurnSpeed) : AbstractBehaviour(), _moveSpeed(pMoveSpeed), _turnSpeed(pTurnSpeed)
 	{
@@ -31,14 +29,14 @@ namespace MGE {
 			turnSpeed = +_turnSpeed;
 		}
 		//translate the object in its own local space
-		_owner->translate(glm::vec3(0.0f, 0.0f, moveSpeed * pStep));
+		//_owner->translate(glm::vec3(0.0f, 0.0f, moveSpeed * pStep));
 
 		//we can also translate directly, basically we take the z axis from the matrix
 		//which is normalized and multiply it by moveSpeed*step, then we add it to the
 		//translation component
-		//glm::mat4 transform = _owner->getTransform();
-		//transform[3] += transform[2] * moveSpeed*pStep;
-		//_owner->setTransform(transform);
+		glm::mat4 transform = _owner->getTransform();
+		transform[3] += transform[2] * moveSpeed*pStep;
+		_owner->setTransform(transform);
 
 		//rotate the object in its own local space
 		_owner->rotate(glm::radians(turnSpeed * pStep), glm::vec3(0.0f, 1.0f, 0.0f));

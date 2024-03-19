@@ -27,6 +27,10 @@
 #include "RenderingProject/RenderingProject.hpp"
 
 #include "RenderingProject/Behaviours/MouselookBehaviour.hpp"
+#include "RenderingProject/Behaviours/WASDMoveBehaviour.hpp"
+#include "RenderingProject/Behaviours/GameObjectFollowBehaviour.hpp"
+#include "RenderingProject/Behaviours/CameraFollowBehaviour.hpp"
+
 #include "RenderingProject_Engine/Core/Model.hpp"
 
 namespace RP {
@@ -58,38 +62,46 @@ namespace RP {
 		MGE::Mesh* cubeMeshF = MGE::Mesh::load(config::MGE_MODEL_PATH + "cube_flat.obj");
 		MGE::Mesh* sphereMeshS = MGE::Mesh::load(config::MGE_MODEL_PATH + "sphere_smooth.obj");
 
+		MGE::Mesh* sphereMeshF = MGE::Mesh::load(config::MGE_MODEL_PATH + "sphere_flat.obj");
+		MGE::Mesh* planeMeshLarge = MGE::Mesh::load(config::MGE_MODEL_PATH + "plane20x20_2tris_aligned_uvs.obj");
+
 		//MATERIALS
 
 		//create some materials to display the cube, the plane and the light
 
 		MGE::AbstractMaterial* lightMaterial = new MGE::ColorMaterial(glm::vec3(1, 1, 0));
 		MGE::AbstractMaterial* runicStoneMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "runicfloor.png"));
+		MGE::AbstractMaterial* landMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "land.jpg"));
+		MGE::AbstractMaterial* brickMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "bricks.jpg"));
 
 		//set Models
 
 		RPEngine::Model* sphereModel = new RPEngine::Model(sphereMeshS, runicStoneMaterial, glm::vec3(2.5, 2.5, 2.5));
-		RPEngine::Model* floorModel = new RPEngine::Model(planeMeshDefault, runicStoneMaterial, glm::vec3(5, 5, 5));
+		RPEngine::Model* floorModel = new RPEngine::Model(planeMeshDefault, runicStoneMaterial, glm::vec3(5, 1, 5));
 		RPEngine::Model* lightModel = new RPEngine::Model(cubeMeshF, lightMaterial, glm::vec3(0.1f, 0.1f, 0.1f));
 		RPEngine::Model* cubeModel = new RPEngine::Model(cubeMeshF, runicStoneMaterial, glm::vec3(0.1f, 0.1f, 0.1f));
+
+		RPEngine::Model* terrainModel = new RPEngine::Model(planeMeshLarge, landMaterial, glm::vec3(2, 1, 2));
+		RPEngine::Model* pedestalModel = new RPEngine::Model(cubeMeshF, runicStoneMaterial, glm::vec3(5, 0.1f, 5));
 
 		//SCENE SETUP
 
 	   //add camera first (it will be updated last)
-		MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 0, 0));
-		//camera->rotate(glm::radians(-40.0f), glm::vec3(1, 0, 0));
+		MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 8, 15));
 		_world->add(camera);
 		_world->setMainCamera(camera);
 
-		MGE::GameObject* camParent = new MGE::GameObject("CamParent", glm::vec3(0, 8, 17));
-		_world->add(camParent);
-		camera->setParent(camParent);
+		MGE::GameObject* camParent = new MGE::GameObject("CamParent", glm::vec3(0, 8, 17), _world);
+		//camera->setParent(camParent);
+		//camParent->setBehaviour(new RP::MouselookBehaviour(camera));
+		camParent->addBehaviour(new RP::WASDMoveBehaviour(10.0f));
 
 		//add the floor
-		MGE::GameObject* plane = new MGE::GameObject("plane", glm::vec3(0, 0, 0), floorModel, _world);
+		MGE::GameObject* plane = new MGE::GameObject("plane", glm::vec3(0, 0.05f, 0), floorModel, _world);
 
-		plane->setMesh(floorModel->getMesh());
-		plane->setMaterial(floorModel->getMaterial());
-		_world->add(plane);
+		MGE::GameObject* cubey = new MGE::GameObject("cubey", glm::vec3(0, 5, 0), cubeModel, _world);
+		cubey->scale(glm::vec3(10, 10, 10));
+
 
 
 		//add a spinning sphere
@@ -102,28 +114,41 @@ namespace RP {
 		//even though it doesn't implement any lighting yet!
 		
 		
-		MGE::Light* light = new MGE::Light("light", glm::vec3(0, 0, -5));
+		MGE::Light* light = new MGE::Light("light", glm::vec3(5, 3, 1));
 		light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
 		light->setMesh(cubeMeshF);
 		light->setMaterial(lightMaterial);
 		light->setBehaviour(new MGE::KeysBehaviour(25));
 		_world->add(light);
-		
-		MGE::GameObject* camFocus = new MGE::GameObject("focus", glm::vec3(0, 2, 0), _world);
-		camFocus->setBehaviour(new MGE::KeysBehaviour(5));
-		light->setParent(camFocus);
 
-		MGE::GameObject* cubeChild = new MGE::GameObject("focus", glm::vec3(4, 0, 0), cubeModel, camFocus);
+		MGE::GameObject* lightFollow = new MGE::GameObject("follower", glm::vec3(0, 4, 0), cubeModel, light);
+
+		lightFollow->scale(glm::vec3(10.0f, 10.0f, 10.0f));
+
+		//MGE::GameObject* camFocus = new MGE::GameObject("focus", glm::vec3(0, 2, 0), _world);
+		//camFocus->setBehaviour(new MGE::KeysBehaviour(5));
+		//light->setParent(camFocus);
+
+		//MGE::GameObject* cubeChild = new MGE::GameObject("focus", glm::vec3(4, 0, 0), cubeModel, camFocus);
 
 		//camera->setParent(camFocus);
-		camParent->setBehaviour(new RP::MouselookBehaviour(camera));
 
-		
-		MGE::GameObject* planer = new MGE::GameObject("plane", glm::vec3(0, 0, 17));
-		planer->scale(glm::vec3(5, 5, 5));
-		planer->setMesh(floorModel->getMesh());
-		planer->setMaterial(floorModel->getMaterial());
-		_world->add(planer);
+		//camParent->addBehaviour(new RP::GameObjectFollowBehaviour(light, glm::vec3(0, 1, 10)));
+
+
+		camera->addBehaviour(new RP::CameraFollowBehaviour(light, glm::vec3(0, 0, 10)));
+
+		MGE::GameObject* spawn= new MGE::GameObject("pedestal", glm::vec3(0, 0.1f, 15),pedestalModel, _world);
+
+
+
+		MGE::GameObject* terrain = new MGE::GameObject("terrain", glm::vec3(0, 0, 0), _world);
+
+		MGE::GameObject* terrain00 = new MGE::GameObject("terrain", glm::vec3(0, 0, 0), terrainModel, terrain);
+		MGE::GameObject* terrain01 = new MGE::GameObject("terrain", glm::vec3(0, 0, -40), terrainModel, terrain);
+		MGE::GameObject* terrain10 = new MGE::GameObject("terrain", glm::vec3(40, 0, 0), terrainModel, terrain);
+		MGE::GameObject* terrain11 = new MGE::GameObject("terrain", glm::vec3(40, 0, -40), terrainModel, terrain);
+
 	}
 
 	void RenderingProject::_render() {

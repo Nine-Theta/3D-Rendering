@@ -335,6 +335,9 @@
     <ClInclude Include="..\src\mge\materials\TextureMaterial.hpp" />
     <ClInclude Include="..\src\mge\MGEDemo.hpp" />
     <ClInclude Include="..\src\mge\util\DebugHud.hpp" />
+    <ClInclude Include="..\src\RenderingProject\Behaviours\CameraFollowBehaviour.hpp" />
+    <ClInclude Include="..\src\RenderingProject\Behaviours\GameObjectFollowBehaviour.hpp" />
+    <ClInclude Include="..\src\RenderingProject\Behaviours\WASDMoveBehaviour.hpp" />
     <ClInclude Include="..\src\RenderingProject\Behaviours\MouselookBehaviour.hpp" />
     <ClInclude Include="..\src\RenderingProject\config.hpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
@@ -345,6 +348,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClInclude>
     <ClInclude Include="..\src\RenderingProject_Engine\Core\Model.hpp" />
+    <ClInclude Include="..\src\RenderingProject_Engine\Core\Transform.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -365,12 +369,16 @@
     <ClCompile Include="..\src\mge\materials\TextureMaterial.cpp" />
     <ClCompile Include="..\src\mge\MGEDemo.cpp" />
     <ClCompile Include="..\src\mge\util\DebugHud.cpp" />
+    <ClCompile Include="..\src\RenderingProject\Behaviours\CameraFollowBehaviour.cpp" />
+    <ClCompile Include="..\src\RenderingProject\Behaviours\GameObjectFollowBehaviour.cpp" />
+    <ClCompile Include="..\src\RenderingProject\Behaviours\WASDMoveBehaviour.cpp" />
     <ClCompile Include="..\src\RenderingProject\Behaviours\MouselookBehaviour.cpp" />
     <ClCompile Include="..\src\RenderingProject\RenderingProject.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Dynamic|Win32'">true</DeploymentContent>
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject_Engine\Core\Model.cpp" />
+    <ClCompile Include="..\src\RenderingProject_Engine\Core\Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
