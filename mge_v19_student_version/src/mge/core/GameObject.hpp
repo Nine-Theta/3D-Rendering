@@ -33,7 +33,7 @@ namespace MGE {
 		
 		//Added:
 		GameObject(const std::string& pName, const glm::vec3& pPosition, RP::RPEngine::Model* pModel, MGE::GameObject* pParent = nullptr);
-		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh = nullptr, MGE::AbstractBehaviour* pBehaviour = nullptr, MGE::AbstractMaterial* pMaterial = nullptr, MGE::World* pWorld = nullptr);
+		GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent, MGE::Mesh* pMesh = nullptr, MGE::AbstractMaterial* pMaterial = nullptr, MGE::AbstractBehaviour* pBehaviour = nullptr, MGE::World* pWorld = nullptr);
 		//
 		
 		virtual ~GameObject();

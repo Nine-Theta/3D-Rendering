@@ -24,7 +24,7 @@
 
 #include "mge/config.hpp"
 #include "RenderingProject/config.hpp"
-#include "RenderingProject/RenderingProject.hpp"
+#include "AssignmentThree.hpp"
 
 #include "RenderingProject/Behaviours/MouselookBehaviour.hpp"
 #include "RenderingProject/Behaviours/WASDMoveBehaviour.hpp"
@@ -36,11 +36,11 @@
 
 namespace RP {
 	//construct the game class into _window, _renderer and hud (other parts are initialized by build)
-	RenderingProject::RenderingProject() : MGE::AbstractGame(), _hud(0)
+	AssignmentThree::AssignmentThree() : MGE::AbstractGame(), _hud(0)
 	{
 	}
 
-	void RenderingProject::initialize() {
+	void AssignmentThree::initialize() {
 		//setup the core part
 		MGE::AbstractGame::initialize();
 
@@ -52,7 +52,7 @@ namespace RP {
 	}
 
 	//build the game _world
-	void RenderingProject::_initializeScene()
+	void AssignmentThree::_initializeScene()
 	{
 		//MESHES
 
@@ -77,8 +77,10 @@ namespace RP {
 		//create some materials to display the cube, the plane and the light
 
 		MGE::AbstractMaterial* lightMaterial = new MGE::ColorMaterial(glm::vec3(1, 1, 0));
-		MGE::AbstractMaterial* greenMaterial = new MGE::ColorMaterial(glm::vec3(0, 1, 0));
+
 		MGE::AbstractMaterial* redMaterial = new MGE::ColorMaterial(glm::vec3(1, 0, 0));
+		MGE::AbstractMaterial* greenMaterial = new MGE::ColorMaterial(glm::vec3(0, 1, 0));
+		MGE::AbstractMaterial* blueMaterial = new MGE::ColorMaterial(glm::vec3(0, 0, 1));
 
 		MGE::AbstractMaterial* runicStoneMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "runicfloor.png"));
 		MGE::AbstractMaterial* landMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "land.jpg"));
@@ -103,14 +105,14 @@ namespace RP {
 		//SCENE SETUP
 
 	   //add camera first (it will be updated last)
-		MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 8, 15));
+		MGE::Camera* camera = new MGE::Camera("camera", glm::vec3(0, 0, 0));
 		_world->add(camera);
 		_world->setMainCamera(camera);
 
-		//MGE::GameObject* camParent = new MGE::GameObject("CamParent", glm::vec3(0, 8, 17), _world);
-		//camera->setParent(camParent);
-		//camParent->setBehaviour(new RP::MouselookBehaviour(camera));
-		//camParent->addBehaviour(new RP::WASDMoveBehaviour(10.0f));
+		MGE::GameObject* camParent = new MGE::GameObject("CamParent", glm::vec3(0, 8, 15), _world);
+		camera->setParent(camParent);
+		camParent->setBehaviour(new RP::MouselookBehaviour(camera));
+		camParent->addBehaviour(new RP::WASDMoveBehaviour(15.0f));
 
 		//add the floor
 		MGE::GameObject* plane = new MGE::GameObject("plane", glm::vec3(0, 0.05f, 0), floorModel, _world);
@@ -140,12 +142,8 @@ namespace RP {
 		light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
 		light->setMesh(cubeMeshF);
 		light->setMaterial(lightMaterial);
-		//light->setBehaviour(new MGE::KeysBehaviour(25));
-		light->setBehaviour(new RP::WASDMoveBehaviour(25));
+		light->setBehaviour(new MGE::KeysBehaviour(25));
 		_world->add(light);
-
-		MGE::GameObject* lightFollow = new MGE::GameObject("follower", glm::vec3(0, 5, 0), cubeModel, light);
-		lightFollow->scale(glm::vec3(3.0f, 3.0f, 3.0f));
 
 		//MGE::GameObject* camFocus = new MGE::GameObject("focus", glm::vec3(0, 2, 0), _world);
 		//camFocus->setBehaviour(new MGE::KeysBehaviour(5));
@@ -157,28 +155,25 @@ namespace RP {
 
 		//camParent->addBehaviour(new RP::GameObjectFollowBehaviour(light, glm::vec3(0, 1, 10)));
 
-
-		camera->addBehaviour(new RP::CameraFollowBehaviour(lightFollow, glm::vec3(0, 0, 10)));
-
 		MGE::GameObject* spawn= new MGE::GameObject("pedestal", glm::vec3(0, 0.1f, 15),pedestalModel, _world);
 
 
 
 		MGE::GameObject* terrain = new MGE::GameObject("terrain", glm::vec3(0, 0, 0), _world);
 
-		MGE::GameObject* terrain00 = new MGE::GameObject("terrain", glm::vec3(0, 0, 0), terrainModel, terrain);
-		MGE::GameObject* terrain01 = new MGE::GameObject("terrain", glm::vec3(0, 0, -40), terrainModel, terrain);
-		MGE::GameObject* terrain10 = new MGE::GameObject("terrain", glm::vec3(40, 0, 0), terrainModel, terrain);
-		MGE::GameObject* terrain11 = new MGE::GameObject("terrain", glm::vec3(40, 0, -40), terrainModel, terrain);
+		MGE::GameObject* terrain00 = new MGE::GameObject("terrain", glm::vec3(-20, 0, 20), terrainModel, terrain);
+		MGE::GameObject* terrain01 = new MGE::GameObject("terrain", glm::vec3(-20, 0, -20), terrainModel, terrain);
+		MGE::GameObject* terrain10 = new MGE::GameObject("terrain", glm::vec3(20, 0, 20), terrainModel, terrain);
+		MGE::GameObject* terrain11 = new MGE::GameObject("terrain", glm::vec3(20, 0, -20), terrainModel, terrain);
 
 	}
 
-	void RenderingProject::_render() {
+	void AssignmentThree::_render() {
 		MGE::AbstractGame::_render();
 		_updateHud();
 	}
 
-	void RenderingProject::_updateHud() {
+	void AssignmentThree::_updateHud() {
 		std::string debugInfo = "";
 		debugInfo += std::string("FPS:") + std::to_string((int)_fps) + "\n";
 
@@ -186,7 +181,7 @@ namespace RP {
 		_hud->draw();
 	}
 
-	RenderingProject::~RenderingProject()
+	AssignmentThree::~AssignmentThree()
 	{
 		//dtor
 	}

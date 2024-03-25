@@ -8,7 +8,7 @@ namespace RP {
 	class WASDMoveBehaviour : public MGE::AbstractBehaviour {
 
 	public:
-		WASDMoveBehaviour(float pMoveSpeed);
+		WASDMoveBehaviour(float pMoveSpeed = 5, float pTurnSpeed = 45);
 		virtual ~WASDMoveBehaviour();
 
 		virtual void update(float pStep);
@@ -17,6 +17,7 @@ namespace RP {
 
 	private:
 		float _moveSpeed;
+		float _turnSpeed;
 
 	};
 }

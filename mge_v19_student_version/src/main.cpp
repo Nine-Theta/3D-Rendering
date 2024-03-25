@@ -2,6 +2,7 @@
 
 #include "mge/core/AbstractGame.hpp"
 #include "RenderingProject/RenderingProject.hpp"
+#include "RenderingProject/AssignmentThree.hpp"
 #include "mge/MGEDemo.hpp"
 
 /**
@@ -23,8 +24,9 @@ int main()
 {
     std::cout << "Starting Game" << std::endl;
 
-    MGE::AbstractGame* game = new RP::RenderingProject();
-    //MGE::AbstractGame* game = new MGE::MGEDemo();
+    /**/ MGE::AbstractGame* game = new RP::AssignmentThree();
+    /** MGE::AbstractGame* game = new RP::RenderingProject();
+    /** MGE::AbstractGame* game = new MGE::MGEDemo(); /**/
     game->initialize();
     game->run();
 

@@ -121,6 +121,15 @@
     <ClInclude Include="..\src\RenderingProject\Behaviours\CameraFollowBehaviour.hpp">
       <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\Behaviours\CustomRotatingBehaviour.hpp">
+      <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\AssignmentThree.hpp">
+      <Filter>MGE Source files\RenderingProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RenderingProject\Materials\LitColorMaterial.hpp">
+      <Filter>MGE Source files\RenderingProject\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -197,6 +206,15 @@
     </ClCompile>
     <ClCompile Include="..\src\RenderingProject\Behaviours\CameraFollowBehaviour.cpp">
       <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject\Behaviours\CustomRotatingBehaviour.cpp">
+      <Filter>MGE Source files\RenderingProject\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject\AssignmentThree.cpp">
+      <Filter>MGE Source files\RenderingProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RenderingProject\Materials\LitColorMaterial.cpp">
+      <Filter>MGE Source files\RenderingProject\Materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

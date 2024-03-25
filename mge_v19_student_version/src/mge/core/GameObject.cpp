@@ -14,16 +14,16 @@ namespace MGE {
 
 	GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, RP::RPEngine::Model* pModel, MGE::GameObject* pParent)
 		: _name(pName), _transform(glm::translate(pPosition)), _parent(pParent), _children(),
-		_mesh(pModel->getMesh()), _behaviours(), _material(pModel->getMaterial()), _position(pPosition)
+		_mesh(pModel->getMesh()), _material(pModel->getMaterial()), _behaviours(), _position(pPosition)
 	{
 		setParent(pParent);
 		scale(pModel->getScale());
 	}
 
 	GameObject::GameObject(const std::string& pName, const glm::vec3& pPosition, MGE::GameObject* pParent,
-		MGE::Mesh* pMesh, MGE::AbstractBehaviour* pBehaviour, MGE::AbstractMaterial* pMaterial, MGE::World* pWorld)
+		MGE::Mesh* pMesh, MGE::AbstractMaterial* pMaterial, MGE::AbstractBehaviour* pBehaviour, MGE::World* pWorld)
 		: _name(pName), _transform(glm::translate(pPosition)), _parent(pParent), _children(),
-		_mesh(pMesh), _behaviours(), _material(pMaterial), _world(pWorld), _position(pPosition)
+		_mesh(pMesh), _material(pMaterial), _behaviours(), _world(pWorld), _position(pPosition)
 
 	{
 		setParent(pParent);
