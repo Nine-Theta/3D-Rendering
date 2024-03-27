@@ -6,15 +6,15 @@ in vec3 vertex;
 in vec3 normal;
 in vec2 uv;
 
-uniform float ambientIntensity;
-
-uniform vec3 ambientLightColor;
+uniform vec3 ambientLight;
 uniform vec3 diffuseColor;
 
 uniform vec3 lightPosition;
 uniform vec3 lightColor;
 
 uniform vec3 attenConstant;
+
+uniform vec3 cameraPosition;
 
 uniform	mat4 	projectionMatrix;
 uniform	mat4 	viewMatrix;
@@ -24,12 +24,14 @@ uniform	mat3 	normalModelMatrix;
 
 out vec3 ambient;
 out vec3 diffuse;
+out vec3 specular;
 out vec3 fColor;
 
-void main( void ){
-    	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertex, 1.f);
 
-        ambient = ambientIntensity * ambientLightColor;
+void main( void ){
+        gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vertex, 1.f);
+
+        ambient = ambientLight;
 
         vec3 vertNormal = normalize(normalModelMatrix * normal);
 
@@ -44,7 +46,10 @@ void main( void ){
         float lightDist = length(lightPosition - vertPos);
         vec3 attenuation = diffuse / (attenConstant.x + (attenConstant.y * lightDist) + (attenConstant.z * lightDist * lightDist));
 
-        fColor = (ambient + attenuation) * diffuseColor; 
+        vec3 camDir = normalize(cameraPosition - vertPos);
+        vec3 reflectDir = reflect(-lightDir, vertNormal);
+        
+        specular = pow(max(dot(camDir, reflectDir), 0), 16) * lightColor;
+
+        fColor = (ambient + attenuation + specular) * diffuseColor; 
 }
-
-

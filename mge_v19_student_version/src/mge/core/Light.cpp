@@ -3,7 +3,8 @@
 
 
 namespace MGE {
-    Light::Light(const std::string& pName, const glm::vec3& pPosition) :GameObject(pName, pPosition)
+    Light::Light(const std::string& pName, const glm::vec3& pPosition, const glm::vec3& pColor, const float& pRange, const glm::vec3& pAttenuation) :
+        GameObject(pName, pPosition), _color(pColor), _range(pRange), _attenuation(pAttenuation)
     {}
 
     Light::~Light() {
@@ -21,6 +22,14 @@ namespace MGE {
         //check whether we need to register or unregister
         if (previousWorld != nullptr) previousWorld->unregisterLight(this);
         if (newWorld != nullptr) newWorld->registerLight(this);
-
     }
+
+    void Light::setColor(const glm::vec3& pColor) { _color = pColor; }
+    glm::vec3 Light::getColor() const { return _color; }
+
+    void Light::setRange(const float& pRange) { _range = pRange; }
+    float Light::getRange() const { return _range; }
+
+    void Light::setAttenuation(const glm::vec3& pAttenuation) { _attenuation = pAttenuation; }
+    glm::vec3 Light::getAttenuation() const { return _attenuation; }
 }

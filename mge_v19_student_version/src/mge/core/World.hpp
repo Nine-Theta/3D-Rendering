@@ -22,9 +22,16 @@ namespace MGE {
         Light* getLightAt(int pIndex);
         int getLightCount();
 
+        void setAmbientLightColor(glm::vec3 pAmbientColor);
+        void setAmbientLightIntensity(float pIntensity);
+        glm::vec3 getAmbientLight();
+
+
     private:
         Camera* _mainCamera;
         std::vector<Light*> _lights;
+
+        glm::vec4 _ambientLight = glm::vec4(1, 1, 1, 1);
 
         World(const World&);
         World& operator=(const World&);

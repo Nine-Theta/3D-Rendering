@@ -89,7 +89,7 @@ namespace RP {
 		MGE::AbstractMaterial* landMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "land.jpg"));
 		MGE::AbstractMaterial* brickMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "bricks.jpg"));
 
-		MGE::AbstractMaterial* litMaterial = new RP::LitColorMaterial(glm::vec3(1, 0, 0),glm::vec4(1,1,1,.15f), glm::vec3(1,1,1));
+		MGE::AbstractMaterial* litMaterial = new RP::LitColorMaterial(glm::vec3(1, 1, 1));
 
 
 		//set Models
@@ -144,7 +144,7 @@ namespace RP {
 		//Note how the texture material is able to detect the number of lights in the scene
 		//even though it doesn't implement any lighting yet!
 		
-		MGE::Light* light = new MGE::Light("light", glm::vec3(5, 3, 1));
+		MGE::Light* light = new MGE::Light("light", glm::vec3(5, 3, 1), glm::vec3(1,1,1));
 		light->scale(glm::vec3(0.1f, 0.1f, 0.1f));
 		light->setMesh(cubeMeshF);
 		light->setMaterial(lightMaterial);

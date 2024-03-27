@@ -9,6 +9,7 @@ namespace MGE {
     {
         _world = this;
         std::cout << " Current lightcount: " << getLightCount() << std::endl;
+        _ambientLight = glm::vec4(1, 1, 1, .1f);
 
     }
 
@@ -39,5 +40,17 @@ namespace MGE {
     int World::getLightCount() {
         if (_lights.size() == 0) return 0;
         return _lights.size();
+    }
+
+    void World::setAmbientLightColor(glm::vec3 pAmbientColor) {
+        _ambientLight = glm::vec4(pAmbientColor, _ambientLight.w);
+    }
+    void World::setAmbientLightIntensity(float pIntensity) {
+        _ambientLight.w = pIntensity;
+
+    }
+
+    glm::vec3 World::getAmbientLight() {
+        return glm::vec3(_ambientLight) * _ambientLight.w;
     }
 }

@@ -6,6 +6,7 @@
 #include "mge/core/Mesh.hpp"
 #include "mge/core/ShaderProgram.hpp"
 #include "mge/core/Light.hpp"
+#include "mge/core/Camera.hpp"
 
 #include "RenderingProject/config.hpp"
 
@@ -13,20 +14,20 @@
 namespace RP {
     MGE::ShaderProgram* LitColorMaterial::_shader = NULL;
 
-    LitColorMaterial::LitColorMaterial(glm::vec3 pDiffuseColor, glm::vec4 pAmbientColor, glm::vec3 pLightColor, glm::vec3 pLightPosition) :
-        _diffuseColor(pDiffuseColor), _ambientLightColor(pAmbientColor), _ambientIntensity(pAmbientColor.w), _lightColor(pLightColor), _lightPosition(pLightPosition)
+    LitColorMaterial::LitColorMaterial(glm::vec3 pDiffuseColor) : _diffuseColor(pDiffuseColor)
     {
         //every time we create an instance of colormaterial we check if the corresponding shader has already been loaded
         _lazyInitializeShader();
-        _attenuationConstant = glm::vec3(0, 0.03f, 0.01f);
+        _attenuationConstant = glm::vec3(0, 0.1f, 0.05f);
     }
 
     void LitColorMaterial::_lazyInitializeShader() {
         //this shader contains everything the material can do (it can render something in 3d using a single color)
         if (!_shader) {
             _shader = new MGE::ShaderProgram();
-            _shader->addShader(GL_VERTEX_SHADER, config::RP_SHADER_PATH + "litcolor.vs");
-            _shader->addShader(GL_FRAGMENT_SHADER, config::RP_SHADER_PATH + "litcolor.fs");
+            //_shader->addShader(GL_VERTEX_SHADER, config::RP_SHADER_PATH + "vertexlitcolorQ_rsqrt.vs");
+            _shader->addShader(GL_VERTEX_SHADER, config::RP_SHADER_PATH + "vertexlitcolor.vs");
+            _shader->addShader(GL_FRAGMENT_SHADER, config::RP_SHADER_PATH + "vertexlitcolor.fs");
             _shader->finalize();
         }
     }
@@ -43,6 +44,8 @@ namespace RP {
     void LitColorMaterial::render(MGE::World* pWorld, MGE::Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) {
         _shader->use();
 
+        MGE::Light* light = pWorld->getLightAt(0);
+
         //set the material color
         glUniform3fv(_shader->getUniformLocation("diffuseColor"), 1, glm::value_ptr(_diffuseColor));
 
@@ -53,12 +56,13 @@ namespace RP {
 
         glUniformMatrix3fv(_shader->getUniformLocation("normalModelMatrix"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(glm::mat3(pModelMatrix)))));
 
-        glUniform1f(_shader->getUniformLocation("ambientIntensity"), _ambientIntensity);
-        glUniform3fv(_shader->getUniformLocation("ambientLightColor"), 1, glm::value_ptr(_ambientLightColor));
-        glUniform3fv(_shader->getUniformLocation("lightColor"), 1, glm::value_ptr(_lightColor));
-        glUniform3fv(_shader->getUniformLocation("lightPosition"), 1, glm::value_ptr(pWorld->getLightAt(0)->getLocalPosition()));
+        glUniform3fv(_shader->getUniformLocation("ambientLight"), 1, glm::value_ptr(pWorld->getAmbientLight()));
+        glUniform3fv(_shader->getUniformLocation("lightColor"), 1, glm::value_ptr(light->getColor()));
+        glUniform3fv(_shader->getUniformLocation("lightPosition"), 1, glm::value_ptr(light->getLocalPosition()));
 
-        glUniform3fv(_shader->getUniformLocation("attenConstant"), 1, glm::value_ptr(_attenuationConstant));
+        glUniform3fv(_shader->getUniformLocation("attenConstant"), 1, glm::value_ptr(light->getAttenuation()));
+
+        glUniform3fv(_shader->getUniformLocation("cameraPosition"), 1, glm::value_ptr(pWorld->getMainCamera()->getWorldPosition()));
 
 
         //now inform mesh of where to stream its data
