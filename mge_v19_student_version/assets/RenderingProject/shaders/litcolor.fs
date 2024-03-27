@@ -4,12 +4,12 @@
 
 in vec3 ambient;
 in vec3 diffuse;
-
-//uniform vec3 diffuseColor;
+in vec3 fColor;
 
 out vec4 fragment_color;
 
 void main( void ) {
-	//fragment_color = vec4 (diffuseColor,1);
-	fragment_color = vec4 (ambient,1);
+	//fragment_color = vec4 (ambient,1);
+	//fragment_color = vec4 (diffuse,1);
+	fragment_color = vec4 (fColor,1);
 }

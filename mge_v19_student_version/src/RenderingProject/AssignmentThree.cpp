@@ -12,7 +12,6 @@
 #include "mge/core/Camera.hpp"
 #include "mge/core/GameObject.hpp"
 
-
 #include "mge/materials/AbstractMaterial.hpp"
 #include "mge/materials/ColorMaterial.hpp"
 #include "mge/materials/TextureMaterial.hpp"
@@ -23,8 +22,11 @@
 #include "mge/util/DebugHud.hpp"
 
 #include "mge/config.hpp"
-#include "RenderingProject/config.hpp"
+
+
 #include "AssignmentThree.hpp"
+#include "RenderingProject_Engine/Core/Model.hpp"
+#include "RenderingProject/config.hpp"
 
 #include "RenderingProject/Behaviours/MouselookBehaviour.hpp"
 #include "RenderingProject/Behaviours/WASDMoveBehaviour.hpp"
@@ -32,7 +34,8 @@
 #include "RenderingProject/Behaviours/CameraFollowBehaviour.hpp"
 #include "RenderingProject/Behaviours/CustomRotatingBehaviour.hpp"
 
-#include "RenderingProject_Engine/Core/Model.hpp"
+#include "RenderingProject/Materials/LitColorMaterial.hpp"
+
 
 namespace RP {
 	//construct the game class into _window, _renderer and hud (other parts are initialized by build)
@@ -86,6 +89,8 @@ namespace RP {
 		MGE::AbstractMaterial* landMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "land.jpg"));
 		MGE::AbstractMaterial* brickMaterial = new MGE::TextureMaterial(MGE::Texture::load(config::MGE_TEXTURE_PATH + "bricks.jpg"));
 
+		MGE::AbstractMaterial* litMaterial = new RP::LitColorMaterial(glm::vec3(1, 0, 0),glm::vec4(1,1,1,.15f), glm::vec3(1,1,1));
+
 
 		//set Models
 
@@ -117,8 +122,9 @@ namespace RP {
 		//add the floor
 		MGE::GameObject* plane = new MGE::GameObject("plane", glm::vec3(0, 0.05f, 0), floorModel, _world);
 
-		MGE::GameObject* SuzannaRed = new MGE::GameObject("Suzanna", glm::vec3(5, 5, 0), _world, suzannaMeshF, redMaterial);
-		SuzannaRed->addBehaviour(new RP::CustomRotatingBehaviour(-40, glm::vec3(0.1f, 1, 0.1f)));
+		MGE::GameObject* SuzannaRed = new MGE::GameObject("Suzanna", glm::vec3(5, 5, 0), _world, suzannaMeshF, litMaterial);
+		//SuzannaRed->addBehaviour(new RP::CustomRotatingBehaviour(-40, glm::vec3(0.1f, 1, 0.1f)));
+		SuzannaRed->addBehaviour(new MGE::KeysBehaviour(30,120));
 
 		MGE::GameObject* teapotGreen= new MGE::GameObject("teapot", glm::vec3(-5, 5, 0), _world, teapotMeshF, greenMaterial);
 		teapotGreen->addBehaviour(new RP::CustomRotatingBehaviour(40, glm::vec3(0.1f, 1, 0.1f)));
@@ -144,6 +150,8 @@ namespace RP {
 		light->setMaterial(lightMaterial);
 		light->setBehaviour(new MGE::KeysBehaviour(25));
 		_world->add(light);
+
+		light->getLocalPosition();
 
 		//MGE::GameObject* camFocus = new MGE::GameObject("focus", glm::vec3(0, 2, 0), _world);
 		//camFocus->setBehaviour(new MGE::KeysBehaviour(5));
